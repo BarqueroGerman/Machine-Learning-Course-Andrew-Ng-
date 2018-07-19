@@ -21,10 +21,18 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+X = [ ones(size(X,1), 1) X]; % We add the ones column for the independent term
 
+% Processing hidden layer
+activationL2 = sigmoid(X * Theta1'); % This will be a 5000x25 vector (result of 5000x401*401x25)
+% Adding ones column for the independent term of second layer.
+activationL2 = [ ones(size(activationL2, 1), 1) activationL2 ];
+activationL2 = activationL2'; % 26x5000 corresponding to the activation values of the second layer
 
-
-
+% Processing output layer
+output = sigmoid(Theta2 * activationL2); % 10x5000 vector (10x26 * 26x5000)
+[ values, p ] = max(output, [], 1);
+p = p';
 
 
 
